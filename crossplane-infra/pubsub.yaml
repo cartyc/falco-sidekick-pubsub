@@ -1,0 +1,15 @@
+---
+apiVersion: pubsub.gcp.crossplane.io/v1alpha1
+kind: Topic
+metadata:
+  name: falco-alerts
+spec:
+  forProvider:
+    labels:
+      falco: alert
+  reclaimPolicy: Delete
+  writeConnectionSecretToRef:
+    name: little-topics-big-secret
+    namespace: crossplane-system
+  providerConfigRef:
+    name: gcp-provider
