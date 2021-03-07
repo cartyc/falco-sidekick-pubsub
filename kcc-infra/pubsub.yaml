@@ -2,5 +2,18 @@ apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata:
   labels:
-    label-one: "value-one"
+    security: "falco"
   name: falco-sidekick
+---
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubSubscription
+metadata:
+  name: falco-alerts
+  labels:
+    security: "falco"
+spec:
+  ackDeadlineSeconds: 15
+  messageRetentionDuration: 86400s
+  retainAckedMessages: false
+  topicRef:
+    name: falco-sidekick

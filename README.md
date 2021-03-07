@@ -4,7 +4,7 @@
 
 ### Crossplane
 
-Crosplane Helm
+Crossplane Helm
 
 ```
 kubectl create namespace crossplane-system
@@ -56,6 +56,7 @@ Configure the Provider
 ```
 # replace this with your own gcp project id
 PROJECT_ID=my-project
+
 echo "apiVersion: gcp.crossplane.io/v1beta1
 kind: ProviderConfig
 metadata:
@@ -124,3 +125,43 @@ tar zxvf release-bundle.tar.gz
 
 kubectl apply -f operator-system/configconnector-operator.yaml
 ```
+## Create Namespace for the configs to live in
+
+```
+kubectl create ns infrastructure
+kubectl annotate ns infrastructure cnrm.cloud.google.com/project-id=${PROJECT_ID}
+```
+
+## Create create the demo resources
+
+This will create a GKE Cluster and a PubSub Topic that Falco Sidekick will send the events too.
+
+```
+kubectl apply -f kcc-infra/
+```
+
+## Install Falco and Falco Sidekick
+
+First lets switch our context to the newly created GKE cluster.
+
+```
+gcloud container clusters get-credentials $CLUSTER_NAME
+```
+
+Once the context has been switched we can go ahead and install Falco.
+
+```
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
+
+helm install falco falcosecurity/falco -f falco-values.yaml
+```
+
+Install Falco Sidekick
+
+Create SA account for sidekick to use for publishing topics.
+
+```
+helm install falco-sidekick falcosecurity/falcosidekick -f sidekick-values.yaml
+```
+

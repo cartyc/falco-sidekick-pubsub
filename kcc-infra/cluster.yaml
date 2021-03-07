@@ -55,40 +55,10 @@ spec:
     shieldedInstanceConfig:
       enableIntegrityMonitoring: true
       enableSecureBoot: true
-#     workloadMetadataConfig:
-#       nodeMetadata: GKE_METADATA_SERVER
+    workloadMetadataConfig:
+      nodeMetadata: GKE_METADATA_SERVER
   podSecurityPolicyConfig:
     enabled: false
   releaseChannel:
     channel: REGULAR
 ---
-apiVersion: container.cnrm.cloud.google.com/v1beta1
-kind: ContainerNodePool
-metadata:
-  labels:
-    label-one: "value-one"
-  name: containernodepool-sample
-spec:
-  location: northamerica-northeast1-a
-  autoscaling:
-    minNodeCount: 1
-    maxNodeCount: 3
-  nodeConfig:
-    nodeCount: 2
-    machineType: n1-standard-1
-    diskSizeGb: 100
-    diskType: pd-standard
-    tags:
-      - tagone
-      - tagtwo
-    preemptible: false
-    oauthScopes:
-      - "https://www.googleapis.com/auth/logging.write"
-      - "https://www.googleapis.com/auth/monitoring"
-    metadata:
-      disable-legacy-endpoints: "true"
-  management:
-    autoRepair: true
-    autoUpgrade: true
-  clusterRef:
-    name: falco-sidekick-demo
