@@ -154,7 +154,7 @@ Once the context has been switched we can go ahead and install Falco.
 helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm repo update
 
-helm install falco falcosecurity/falco -f falco-values.yaml
+helm install falco falcosecurity/falco -f values/falco-values.yaml
 ```
 
 Install Falco Sidekick
@@ -162,6 +162,14 @@ Install Falco Sidekick
 Create SA account for sidekick to use for publishing topics.
 
 ```
-helm install falco-sidekick falcosecurity/falcosidekick -f sidekick-values.yaml
+gcloud iam create service-accounts $SA_ACCOUNT
+
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+--member="serviceAccount:${SA_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com" \
+--role="roles/pubsub.publisher"
+```
+
+```
+helm install falco-sidekick falcosecurity/falcosidekick -f values/sidekick-values.yaml
 ```
 

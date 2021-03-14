@@ -23,7 +23,7 @@ spec:
   enableShieldedNodes: true
   location: northamerica-northeast1-a
   loggingService: logging.googleapis.com/kubernetes
-  initialNodeCount: 1
+  initialNodeCount: 2
   masterAuth:
     clientCertificateConfig:
       issueClientCertificate: false
@@ -55,8 +55,8 @@ spec:
     shieldedInstanceConfig:
       enableIntegrityMonitoring: true
       enableSecureBoot: true
-    workloadMetadataConfig:
-      nodeMetadata: GKE_METADATA_SERVER
+    # workloadMetadataConfig:
+    #   nodeMetadata: GKE_METADATA_SERVER
   podSecurityPolicyConfig:
     enabled: false
   releaseChannel:

@@ -17,3 +17,7 @@ spec:
   retainAckedMessages: false
   topicRef:
     name: falco-sidekick
+  pushConfig:
+    pushEndpoint: https://pubsub-tutorial-w4gkhlavjq-nn.a.run.app
+    oidcToken:
+      serviceAccountEmail: cloud-run-pubsub-invoker@kubernetes-configs.iam.gserviceaccount.com

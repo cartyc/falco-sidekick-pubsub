@@ -1,0 +1,19 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: falco-sidekick
+spec:
+  displayName: Falco Sidekick PubSub SA
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicy
+metadata:
+  name: falco-sidekick-binding
+spec:
+  resourceRef:
+    kind: Project
+    external: projects/kubernetes-configs
+  bindings:
+    - members:
+      - serviceAccount:falco-sidekick@kubernetes-configs.iam.gserviceaccount.com
+      role: roles/pubsub.publisher
