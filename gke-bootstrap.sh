@@ -17,5 +17,5 @@ gcloud container clusters create kcc-infra \
 --machine-type n2-standard-2 \
 --zone northamerica-northeast1-a \
 --image-type cos_containerd \
---workload-pool=kubernetes-configs.svc.id.goog \
+--workload-pool={$PROJECT_ID}.svc.id.goog \
 --addons ConfigConnector
